@@ -21,5 +21,6 @@ from charts.views import EditorChartView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chart/',views.index),
-    path('show/', EditorChartView.as_view(), name='index')
+    path('show/', EditorChartView.as_view(), name='index'),
+    path('',include('makechart.urls'))
 ]
