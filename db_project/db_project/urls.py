@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chart/',views.index),
     path('show/', EditorChartView.as_view(), name='index'),
-    path('',include('makechart.urls'))
+    # path('',include('makechart.urls')),
+    path('',include('getuser.urls'))
 ]

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name = "viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var _id = {{id|safe}};
+        var _password = {{password|safe}};
+        var _name = {{name|safe}};
+        var _position = {{position|safe}};
+        var _num_gpus = {{num_gpus|safe}};
+        document.write(_id)
+    </script>
+    
+    <h1 id ='_id'></h1>
+    <h1>_password</h1>
+    <h1>_name</h1>
+    <h1>_position</h1>
+    <h1>_num_gpus</h1>
+</body>
+</html>

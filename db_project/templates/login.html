@@ -1,0 +1,8 @@
+<h1>학생 이름을 입력해보세요!</h1>
+<form action="{% url ''%}" method="POST">
+    {% csrf_token %}
+    <input name="username" placeholder="이름"/>
+    <br/>
+    <br/>
+    <button type="submit">체크하기</button>
+</form>
