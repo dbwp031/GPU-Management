@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app_chart',
+    'charts'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'db_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['C:/Users/Yuje_Lee/Desktop/database_project/db_project/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,8 +78,8 @@ WSGI_APPLICATION = 'db_project.wsgi.application'
 DATABASES = { 
 	'default': { 
     	'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'MyFirstDatabase', 
-        'USER': 'dbwp031@gmail.com', 
+        'NAME': 'db_project', 
+        'USER': 'root', 
         'PASSWORD': '!Yooje1207', 
         'HOST': 'localhost', 
         'PORT': '3306', 
