@@ -3,6 +3,7 @@ from .models import *
 # Create your views here.
 import pandas as pd
 import pymysql
+from makechart.views import home as chart_home
 def home(request):
     item = User.objects.all().values()
     df = pd.DataFrame(item)
@@ -44,4 +45,49 @@ def login(request):
     return render(request,'login.html',)#context=rows)
 
 def show_login_page(request):
+    if request.method == "GET":
+        return render(request,'login.html')
+    elif request.method == "POST":
+        _id = request.POST['username']
+        _pwd = request.POST['password']
+        conn = pymysql.connect(host='127.0.0.1',user='root',password='!Yooje1207',db='db_project',charset='utf8')
+        curs = conn.cursor()
+        sql = f"select * from getuser_user where user_id = '{_id}' and password = '{_pwd}'"
+        # sql= f"select * from getuser_user where user_id = '{_id}'"# where {_pwd}= ( select password from getuser_user where id = {_id})"
+        curs.execute(sql)
+        rows = curs.fetchall()
+        print("LOGIN DB")
+        print(rows)
+        if len(rows) == 0:
+            conn.close()
+            return render(request,'login.html')
+        elif len(rows) == 1:
+            print("chart")
+            conn.close()
+            return render(request,'index.html')
+        else:
+            print("로그인 가능 인원수가 두명 이상입니다.")
+        conn.close()
+    
     return render(request,'login.html')
+
+
+def signup(request):
+    # print(request)
+    # print(request.method)
+    if request.method == 'GET':
+        # 페이지를 불러올 때
+        return render(request, 'signup.html')
+    elif request.method == 'POST':
+        # 페이지 내에서 POST 발생 시
+        username = request.POST['username']
+        password = request.POST['password']
+        re_password = request.POST['re-password']
+        
+        print(username)
+        print(password)
+        print(re_password)
+ 
+        return render(request, 'login.html')
+    print("hi")
+    print(request)

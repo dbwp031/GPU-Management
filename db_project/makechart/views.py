@@ -12,4 +12,5 @@ def home(request):
         'df1':df1
     }
     print(mydict)
+    print(request)
     return render(request,'index.html',context=mydict)
