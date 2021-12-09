@@ -6,6 +6,7 @@ class User(models.Model):
     password = models.CharField(max_length=45,null=False)
     name = models.CharField(max_length=45,null=False)
     position = models.CharField(max_length=45,null=False)
+    isAdmin = models.BooleanField(default=False)
     num_gpus = models.PositiveSmallIntegerField(default=0,null=False) # IntergerField => PositiveSmallIntegerField
     # requests_sent = models.CharField(max_length=45,null=False)
-    # joined_projects =models.CharField(max_length=45,null=True)
+    # joined_projects = models.ManyToManyField("getproject.project",blank=True)

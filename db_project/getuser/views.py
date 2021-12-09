@@ -4,6 +4,8 @@ from .models import *
 import pandas as pd
 import pymysql
 from makechart.views import home as chart_home
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 def home(request):
     item = User.objects.all().values()
     df = pd.DataFrame(item)
@@ -42,7 +44,7 @@ def login(request):
     # print(rows)
     
     # conn.close()
-    return render(request,'login.html',)#context=rows)
+    return render(request,'index.html',)#context=rows)
 
 def show_login_page(request):
     if request.method == "GET":
@@ -52,6 +54,11 @@ def show_login_page(request):
         _pwd = request.POST['password']
         conn = pymysql.connect(host='127.0.0.1',user='root',password='!Yooje1207',db='db_project',charset='utf8')
         curs = conn.cursor()
+        # sql = f"select * from getuser_user'"
+        # curs.execute(sql)
+        # rows = curs.fetchall()
+        # print("LOGIN DB")
+        # print(rows)        
         sql = f"select * from getuser_user where user_id = '{_id}' and password = '{_pwd}'"
         # sql= f"select * from getuser_user where user_id = '{_id}'"# where {_pwd}= ( select password from getuser_user where id = {_id})"
         curs.execute(sql)
@@ -63,31 +70,58 @@ def show_login_page(request):
             return render(request,'login.html')
         elif len(rows) == 1:
             print("chart")
+            print(request)
             conn.close()
-            return render(request,'index.html')
+            # return render(request,'login/success')
+            return HttpResponseRedirect("main")
         else:
             print("로그인 가능 인원수가 두명 이상입니다.")
         conn.close()
     
-    return render(request,'login.html')
+    # return render(request,'login.html')
 
 
 def signup(request):
     # print(request)
-    # print(request.method)
+    print(request.method)
+    
     if request.method == 'GET':
         # 페이지를 불러올 때
         return render(request, 'signup.html')
     elif request.method == 'POST':
         # 페이지 내에서 POST 발생 시
-        username = request.POST['username']
+        userid = request.POST['userid']
         password = request.POST['password']
-        re_password = request.POST['re-password']
+        username = request.POST['username']
         
-        print(username)
-        print(password)
-        print(re_password)
- 
-        return render(request, 'login.html')
-    print("hi")
-    print(request)
+        re_password = request.POST['re-password']
+        if password != re_password or password == '':
+            messages.info(request, "비밀번호를 동일하게 작성해주세요.")
+            return render(request, 'signup.html')
+        else:
+            conn = pymysql.connect(host='127.0.0.1',user='root',password='!Yooje1207',db='db_project',charset='utf8')
+            curs = conn.cursor()
+            sql = f"select * from getuser_user where user_id = '{userid}'"
+        # sql= f"select * from getuser_user where user_id = '{_id}'"# where {_pwd}= ( select password from getuser_user where id = {_id})"
+            curs.execute(sql)     
+            rows = curs.fetchall()
+            print(rows)
+            conn.close()     
+
+            if len(rows)== 0:
+                print("등록 성공")
+                # sql = f" insert into getuser_user (user_id, password, name,position,num_gpus) Values('{userid}','{password}','{username}','undergrad',0) "        
+                conn = pymysql.connect(host='127.0.0.1',user='root',password='!Yooje1207',db='db_project',charset='utf8')
+                curs = conn.cursor()    
+                sql = f"insert into getuser_user(user_id, password, name, position, num_gpus) values('{userid}','{password}','{username}','undergrad',0)"
+                # sql = f" insert into `getuser_user` Values('{userid}','{password}','{username}','undergrad') "        
+                curs.execute(sql)
+                rows = curs.fetchall()
+                conn.commit()
+                print(rows)     
+                conn.close()     
+                return render(request, 'login.html')
+            else:
+                return render(request, 'signup.html')
+    # print("hi")
+    # print(request)

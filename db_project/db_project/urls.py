@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 from app_chart import views
 from charts.views import EditorChartView
-
+from getproject.views import set_project
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chart/',views.index),
     path('show/', EditorChartView.as_view(), name='index'),
     path('makechart/',include('makechart.urls')),
-    path('',include('getuser.urls'))
+    path('get_project/',include('getproject.urls')),
+    path('',include('getuser.urls')),
 ]

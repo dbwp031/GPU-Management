@@ -8,7 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-    <canvas id="myChart" width="400" height="30vh"></canvas>
+    <div class="chart-container" style="position: relative; height:20vh; width:40vw">
+        <canvas id="myChart"></canvas>
+    </div>
+
     <script>
         var df = {{df|safe}};
         var df1 = {{df1|safe}};

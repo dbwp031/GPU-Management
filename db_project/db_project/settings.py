@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'app_chart',
     'charts',
     'makechart',
-    'getuser'
+    'getuser',
+    'getproject'
 ]
 
 MIDDLEWARE = [
